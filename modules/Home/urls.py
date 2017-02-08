@@ -3,7 +3,7 @@ from .views import index, contactos, otros, saludo, suma, compara
 
 
 urlpatterns = [
-    url(r'^index$', index, name='index'),
+    url(r'^$', index, name='index'),
     url(r'^contactos$', contactos, name='contactos'),
     url(r'^otros/(?P<num>[0-9]+)/$', otros, name='otros'),
     url(r'^saludo/(?P<name>[\w\s]+/$)', saludo, name='saludo'),

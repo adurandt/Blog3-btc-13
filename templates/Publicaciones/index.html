@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'title' %}Publicaciones{% endblock %}
+{% block 'content' %}
+	{% comment %}
+	{{ publicaciones.nombre | upper }} <!-- variables  del contexto aplicando filter para upper -->
+	</br>	
+	{{ publicaciones.nombre | length }}
+	</br>
+	{{ publicaciones.edad | default:"No tiene" }}
+	</br>
+	{{ publicaciones.fecha | date:"D d M Y" }}
+	{% endcomment %}
+
+	{% for publicacion in publicaciones %}
+		{% for key, value in publicacion.items %}
+			{% if key == "raiting" and value <= 3 %}
+				<h3>Menos Destacados</h3>
+				{{ key }} : {{ value }}
+			{% endif %}
+			{{ key }} : {{ value }}	
+			<br>			
+		{% endfor %}
+		<br>
+		<hr>		
+	{% endfor %}
+{% endblock %}
