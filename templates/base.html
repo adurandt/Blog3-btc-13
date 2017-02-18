@@ -3,21 +3,33 @@
 <html>
 <head>
 	<title>{% block 'title' %} {% endblock %}</title>
-	<link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+	<link rel="stylesheet" href="{% static 'css/materialize.css' %}" />
 </head>
 <body>
 	<nav>
     	<div class="nav-wrapper">
-      		<a href="#" class="brand-logo">Logo</a>
-      		<ul id="nav-mobile" class="right hide-on-med-and-down">
-        		<li><a href="sass.html">Sass</a></li>
-        		<li><a href="badges.html">Components</a></li>
-        		<li><a href="collapsible.html">JavaScript</a></li>
+      		<a href="#" class="brand-logo right">Logo Blog backend</a>
+          {% if user.is_authenticated %}
+            <span style="margin-left:50%;">Hola: {{user.username}}</span>
+            <a href="#">Mi perfil</a>
+            <a href="{% url 'Publicaciones:index-publicacion' %}">Mis publicaciones</a>
+            <a href="{% url 'Home:logout' %}">Logout</a>
+
+
+          {% else %}
+
+      		  <ul id="nav-mobile" class="left hide-on-med-and-down">
+        		<li><a href="{% url 'Home:signup' %}">Sign up</a></li>
+        		<li><a href="{% url 'Home:login' %}">Login</a></li>
       		</ul>
+          {% endif %}
     	</div>
   	</nav>
 	{% block 'content' %}
 	{% endblock %}
-	<script src="{% static 'js/jquery-3.1.1.min.js' %}>
+	<script src="{% static 'js/jquery-3.1.1.min.js' %}" />
+  <script src="{% static 'js/materialize.min.js' %}" />
+  <script src="{% static 'js/app.js' %}" />
+  
 </body>
 </html>	

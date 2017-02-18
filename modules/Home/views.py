@@ -1,27 +1,67 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from .forms import LoginForm
+from django.contrib.auth import authenticate, login as log, logout
 
-# Create your views here.
 
 def index(request):
-	return render(request, 'Home/index.html')
+	user = request.user
+
+	return render(request, 'Home/index.html',{"user":user})
 
 def contactos(request):
+
 	return HttpResponse('<b>Pagina de Contactos</b>')
 
-def otros(request, num):
-	return HttpResponse('Página de otros número: <b>' + num + '</b>')
+def singup(request):
+		if request.method == 'POST':
+			firts_name = request.POST['firts_name']
+			last_name = request.POST['last_name']
+			username = request.POST['username']
+			password = request.POST['password']
 
-def saludo(request, name):
-	return HttpResponse('Hola, <b><i>{}</i></b> bienvenido!!!'.format(name))
+			user = User.objects.get(username=username)
+			if user is None:
 
-def suma(request, x, y):
-	suma = int(x) + int(y)
-	return HttpResponse('La suma de <i>{}</i> más <i>{}</i> es: <b>{}</b>'.format(x,y,suma))
+				user = User.objects.create_user(
+					first_name = first_name,
+					last_name = last_name,
+					username = username,
+					password = password
+				)
+				user.save()
 
-def compara(request, x, y):
-	if int(x) > int(y):
-		compara = (x,y)
-	else:
-		compara = (y,x)
-	return HttpResponse('El valor de %s es mayor que %s' % compara)
+				return HttpResponse('<b>Usuario Registrado</b>')
+
+			else:
+
+				return HttpResponse('<b>Usuario ya Existe</b>')	
+			
+		else:
+
+			return render(request, "Home/signup.html")		
+
+def login(request):
+		
+		if request.method == 'POST':
+			
+			user = authenticate(username=request.POST['username'],
+			password=request.POST['password'])
+
+			if user is not None:
+				log(request, user)
+				return redirect('Home:index')
+
+			else:
+
+				return HttpResponse("Error en usuario o contraseña")
+
+		else:
+
+			return render(request, 'Home/login.html')
+
+def Logout(request):
+	logout(request)
+	return redirect('Home:index')
+

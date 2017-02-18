@@ -15,12 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.conf import settings
-from django.conf.urls.static import static  #para los statics
+from .api_urls import urlpatterns as api_urls
+#from django.conf import settings
+#from django.conf.urls.static import static  #para los statics
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^home/', include('modules.Home.urls')),
-    url(r'^publicaciones/', include('modules.Publicaciones.urls')) 
+    url(r'^', include('modules.Home.urls')),
+    url(r'^home/', include('modules.Home.urls', namespace='Home', app_name='Home')),    
+    url(r'^publicaciones/', include('modules.Publicaciones.urls', namespace='Publicaciones', app_name='Publicaciones')),    
+    url(r'^api/v1/', include(api_urls)), # url de API
 ] #+ static(settings.MEDIA_URL,settings.MEDIA_ROOT) #clase que concatena rutas 2
 #+ static(setting.STATIC_URL,settings.STATIC_ROOT)  # clase quedirecciona todo lo que encuentra /static/ a la ruta 

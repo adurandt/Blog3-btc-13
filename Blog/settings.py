@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
+import os, datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,14 +30,28 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
+
+APPLICATION_APPS = [
+    'modules.Home',
+    'modules.Publicaciones',
+]
+
+THIRD_APPLICATION = [
+    'rest_framework',
+]
+
+
+INSTALLED_APPS = DJANGO_APPS + APPLICATION_APPS + THIRD_APPLICATION
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -120,9 +134,39 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/' # ruta relativa
-#STATIC_ROOT = os.path.join(os.getcwd(), 'static') # ruta absoluta, concatena el path general
-STATICFILES_DIRS = [os.path.join(os.getcwd(), 'static')] # Lista  de rutas para separar los statics por apps o rutas especiales
+STATIC_URL = '/static/' #Ruta relativa
+#STATIC_ROOT = os.path.join(os.getcwd(),'static')
+STATICFILES_DIRS = [os.path.join(os.getcwd(),'static')]
 
-MEDIA_URL ='/media/'
-MEDIA_ROOT =  os.path.join(os.getcwd(), 'media') #
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.getcwd(),'media')
+
+# Para extneder la clase de Usuario
+# AUTH_USER_MODEL = 'Usuarios.User'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ],
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
+
+
+# Setting adicionales para db postgress
+
+try:
+    from .local_settings import *
+except:
+    pass

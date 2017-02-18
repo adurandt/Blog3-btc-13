@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<div class="row">
+<form class="col s12" action= "{% url 'Home:login' %}" method="post">
+ {% csrf_token %}
+
+ <div class="row">
+  <div class="input-field col s12">
+    <input id="username" type="text" class="validate" name="username">
+    <label for="username">Username</label>
+  </div>
+</div>
+<div class="row">
+  <div class="input-field col s12">
+    <input id="password" type="password" class="validate" name="password">
+    <label for="password">Password</label>
+  </div>
+</div>
+ <input type="submit" name="enviar" value="Enviar">
+ 
+</form>
+</div>
+{% endblock content %}

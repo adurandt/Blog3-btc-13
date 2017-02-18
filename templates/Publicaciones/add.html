@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+{% block 'title' %}Publicaciones|add{%endblock%}
+{% block 'content'%}
+	<form class="" action="{%  url 'Publicaciones:add-publicacion' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+      <div class="row">
+        <div class="input-field col s6">
+          <input  id="Nombre" type="text" name="nombre" class="validate">
+          <label for="first_name">Nombre</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <textarea   type="text" name="contenido" class="validate"></textarea>
+          <label for="first_name">Contenido</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select class="" name="tag">
+            <option value="" selected>--Seleciona opcion---</option>
+          {%for key, values in tags%}
+            <option value="{{key}}">{{value}}</option>
+          {%endfor%}  
+          </select>
+          <label for="first_name">TAGS</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="imagen" id="" type="file" class="validate">
+          <label for="first_name">Imagen</label>
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+        <i class="material-icons right">send</i>
+      </button>
+    </div>	  
+	</form>
+{%endblock%}
