@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from .api_urls import urlpatterns as api_urls
+from rest_framework.routers import DefaultRouter
+from .api_urls import urlpatterns as api_urls 
+from .api_viewset import PublicacionViewset
 #from django.conf import settings
 #from django.conf.urls.static import static  #para los statics
+
+router = DefaultRouter()  #
+router.register(r'^viewsets/$',PublicacionViewset)#url ejemplo viewsets, crea una serie de urls predefinidas (post, get, put ..)
+urls = router.urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,5 +31,6 @@ urlpatterns = [
     url(r'^home/', include('modules.Home.urls', namespace='Home', app_name='Home')),    
     url(r'^publicaciones/', include('modules.Publicaciones.urls', namespace='Publicaciones', app_name='Publicaciones')),    
     url(r'^api/v1/', include(api_urls)), # url de API
-] #+ static(settings.MEDIA_URL,settings.MEDIA_ROOT) #clase que concatena rutas 2
+] + urls
+#+ static(settings.MEDIA_URL,settings.MEDIA_ROOT) #clase que concatena rutas 2
 #+ static(setting.STATIC_URL,settings.STATIC_ROOT)  # clase quedirecciona todo lo que encuentra /static/ a la ruta 

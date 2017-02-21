@@ -1,12 +1,13 @@
 
+import django_filters.rest_framework
 from rest_framework.views import APIView
-from rest_framework import status, generics
+from rest_framework import status, generics, filters
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
 from .models import Publicacion
 from .serializers import UserFirstSerializer, UserSecondSerializer, PublicacionFirstSerializer, PublicacionSecondSerializer
-
+from .permissions import GroupPermission
 
 #Vistas basdas en clases
 
@@ -79,9 +80,24 @@ class PublicacionList(generics.ListCreateAPIView):  # ListCreateAPIView hace el 
 
 	queryset = Publicacion.objects.all()
 	serializer_class = PublicacionSecondSerializer
+	filter_backends = (filters.SearchFilter,django_filters.rest_framework.DjangoFilterBackend)
+	filter_fields = ('fecha',)
+	search_fields = ('nombre','contenido','fecha','tags')
+
+
+	# def get_queryset(self):
+
+	# 	queryset = Publicacion.objects.all()
+	# 	name = self.request.query_params.get('publicacion', None)  #query_param  (se inician por ? y se sepoaran &)
+	# 	if name is not None:
+	# 		queryset = Publicacion.objects.filter(nombre__icontains=name)  #nombre=,  nombre__icontains no case sentive
+
+	# 	return queryset
+			
 
 class PublicacionDetail(generics.RetrieveUpdateDestroyAPIView):
 
 	queryset = Publicacion.objects.all()
 	serializer_class = PublicacionSecondSerializer
-	permission_classes = (IsAdminUser,)
+	#permission_classes = (IsAdminUser,)  # es admin
+	permission_classes = (GroupPermission,)
