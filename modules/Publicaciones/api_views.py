@@ -100,4 +100,6 @@ class PublicacionDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Publicacion.objects.all()
 	serializer_class = PublicacionSecondSerializer
 	#permission_classes = (IsAdminUser,)  # es admin
-	permission_classes = (GroupPermission,)
+	#permission_classes = (GroupPermission,)
+
+	

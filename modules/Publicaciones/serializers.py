@@ -47,4 +47,5 @@ class PublicacionSecondSerializer(serializers.ModelSerializer, serializers.Seria
 
 	class Meta:
 		model= Publicacion
-		fields = ("nombre", "contenido", "fecha", "tags", "autor", "imagen")
+		fields = ("nombre", "contenido", "fecha", "tags", "autor")
+		

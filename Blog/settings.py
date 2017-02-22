@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os, datetime
+import dj_databse_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -24,11 +25,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '%+8=0xca24pu^(^@wc^%y9m_hv#a5ow98s0-ff&c8=h4s2&d8%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-
+SECURE_PROXY_SSL_HEADER = ['HTTP_X_FORWARDED_PROTO', 'hhps']
 # Application definition
 
 DJANGO_APPS = [
@@ -93,12 +94,7 @@ WSGI_APPLICATION = 'Blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = ['default'] = dj_database_url.config()  #configuraciones de heroku
 
 
 # Password validation
