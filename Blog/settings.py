@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'Blog.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = dict()
-DATABASES = ['default'] = dj_database_url.config()  #configuraciones de heroku
+DATABASES['default'] = dj_database_url.config()  #configuraciones de heroku
 
 
 # Password validation
@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-mx'
 
-TIME_ZONE = 'America/mexico_city'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
