@@ -7,8 +7,8 @@ schema_view = get_swagger_view(title='Blog API')
 
 
 urlpatterns = [
-    url(r'^users/', include('modules.Publicaciones.urls_api')),
-    url(r'^auth/', obtain_jwt_token),
-    url(r'^documentation/', schema_view),
+    url(r'^users/', include('modules.Publicaciones.urls_api')),		# http://localhost:8081/api/v1/users/
+    url(r'^auth/', obtain_jwt_token),								# http://localhost:8081/api/v1/auth/
+    url(r'^documentation/', schema_view),							# http://localhost:8081/api/v1/documentation/
     #TODO agregar publicaciones
 ]
